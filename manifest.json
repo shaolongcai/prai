@@ -1,0 +1,7 @@
+{
+  "name": "流程箱",
+  "id": "TCbCvp707RGnXEQxBUdq5",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "src/app/page.js"
+}
