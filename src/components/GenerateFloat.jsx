@@ -1,8 +1,10 @@
 "use client"
-import { Drawer } from '../app/lib/mui';
-import styles from './GenerateFloat.module.css'
-import { TextField, Button, ButtonGroup } from '../app/lib/mui';
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import ButtonGroup from "@mui/material/ButtonGroup";
+import { globalContext } from '../app/layout';
 // import ReactMarkdown from 'react-markdown';
 // import remarkGfm from 'remark-gfm'
 
@@ -11,11 +13,17 @@ function GenerateFloat(props) {
     const { topic, open, onClose } = props
 
     const [generateText, setGenerateText] = useState('')
+    const [value, setValue] = useState('按照场景生成流程')
     const isGenerate = Boolean(generateText)
+    const context = useContext(globalContext);
+    const [loading, setLoading] = useState(false)
 
     //调用接口生成文本,文本要顶格，否则无法解析markdown
     const handleGenerate = () => {
-        setGenerateText(`
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+            setGenerateText(`
         前提条件：用户已经安装了该产品，并且打开了登录页面。
 
         用户进入登录页面，可以选择使用手机号码、邮箱或用户名进行登录。
@@ -70,67 +78,47 @@ function GenerateFloat(props) {
         a. 用户输入用户名和注册时使用的手机号码或邮箱地址，并点击确认按钮进行验证。
         i. 如果用户名和注册时使用的手机号码或邮箱地址匹配成功，则跳转到重置密码页面。
         ii. 如果用户名和注册时使用的手机号码或邮箱地址匹配失败，则显示错误提示信息并要求重新输入。`)
+        }, 2000)
     }
 
     //生成到画布
     const handleDraw = () => {
-        let pluginId = { pluginId: '*' };
-        let originUrl = 'https://js.design';
-        switch ('1') {
-            //Figma
-            case 'figma':
-                pluginId = { pluginId: '*' };
-                originUrl = '*';
-                break;
-            case 'mg':
-                pluginId = {};
-                originUrl = '*';
-                break;
-            case 'pixso':
-                pluginId = {};
-                originUrl = '*';
-                break;
-            default:
-                break;
+        const msg = {
+            type: 'generateText',
+            text: generateText,
+            name: topic,
         }
-        window.parent.postMessage(
-            {
-                pluginMessage: {
-                    type: 'generateText',
-                    text: generateText,
-                    name: topic,
-                },
-                ...pluginId,
-            },
-            originUrl
-        );
+        context.postMsg(msg)
     }
 
     return <Drawer classes={{
-        paper: styles.root,
+        paper: "w-[400px] bg-bg", // 使用tailwind复写MUI组件样式的办法
     }}
         anchor='right'
         open={open}
         onClose={onClose}>
-        <div className="relative left-4 top-4 w-80">{topic}</div>
-        <div className="p-4 my-4 w-fit overflow-y-auto   min-h-[482px] whitespace-pre-wrap">
+        <div className="flex h-12 p-4  w-80  text-titleMedium">{topic}</div>
+        <div className="p-4  w-fit overflow-y-auto   min-h-[69.6%] whitespace-pre-wrap text-bodySmall">
             {/* <ReactMarkdown remarkPlugins={[remarkGfm]} > */}
             {generateText}
             {/* </ReactMarkdown> */}
         </div>
-        <TextField label="Multiline"
+        <TextField
+            label="额外要求"
             multiline
             maxRows={4}
             rows={4}
             variant="filled"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
         />
         <ButtonGroup className="flex">
-            <Button fullWidth variant="contained" color="primary" onClick={handleGenerate}>
-                生成
+            <Button disabled={loading} fullWidth variant="contained" onClick={handleGenerate}>
+                {loading ? '生成中...' : '生成'}
             </Button>
             {
                 isGenerate &&
-                <Button fullWidth variant="outline" color="secondary" onClick={handleDraw}>
+                <Button fullWidth variant="filledTonal" color="secondary" onClick={handleDraw}>
                     保存到画布
                 </Button>
             }

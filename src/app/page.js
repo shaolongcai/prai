@@ -2,13 +2,11 @@
 import FlowCardList from '@/components/FlowCardList'
 import GenerateFloat from '@/components/GenerateFloat'
 import React, { useState } from "react";
-import styles from './page.module.css'
 
 export default function Home() {
 
   const [topic, setTopic] = useState('')
   const [open, setOpen] = useState(false)
-
 
   //点击主题卡片
   const onClick = (topic) => {

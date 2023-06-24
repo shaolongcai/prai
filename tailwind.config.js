@@ -11,6 +11,7 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
+      'bg': '#FCFCFF',
       'onBg': '#1A1C1EFF',
       'surface': '#FCFCFF',
       'onSurface': '#1A1C1E',
@@ -29,6 +30,18 @@ module.exports = {
           lineHeight: '20px',
           fontWeight: 500,
         },
+      ],
+      'titleMedium': ['16px',
+        {
+          lineHeight: '24px',
+          fontWeight: 500,
+        },
+      ],
+      'bodySmall': ['12px',
+        {
+          lineHeight: '16px',
+          fontWeight: 400,
+        },
       ]
     },
     extend: {},
@@ -36,4 +49,7 @@ module.exports = {
   plugins: [
     require('@tailwindcss/typography'),
   ],
+  corePlugins: {
+    preflight: false, //不受tailwind基础样式影响
+  },
 }
