@@ -1,9 +1,10 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/globals.css'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from '../../theme'
+import cloudbase from '@cloudbase/js-sdk';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -43,6 +44,33 @@ const postMsg = (pluginMessage) => {
 }
 
 export default function RootLayout({ children }) {
+
+  const [app, setApp] = useState(null)
+
+
+  useEffect(() => {
+
+  }, []);
+
+  useEffect(() => {
+    const ENV = 'TEST'; //测试环境
+    // const ENV = 'PRODUCTION'; //正式环境
+    const envId = ENV === 'TEST' ? 'inspiration-test-2f7mtqq233061d9' : 'inspiration-9g1159fid21da3f2'
+    const app = cloudbase.init({
+      env: envId
+    });
+    const auth = app.auth();
+    async function login() {
+      await auth.signInAnonymously();
+      const loginScope = await auth.loginScope();
+      // 如为匿名登录，则输出 true
+      console.log(loginScope === 'anonymous');
+    }
+    //匿名登录
+    login();
+    setApp(app)
+  }, [])
+
   return (
     <html lang="en">
       <globalContext.Provider
@@ -50,7 +78,7 @@ export default function RootLayout({ children }) {
           // pla: pla,
           // openid: openid,
           // setOpenid: setOpenid,
-          // app: app,
+          app: app,
           postMsg: postMsg
         }}>
         <ThemeProvider theme={theme}>

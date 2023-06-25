@@ -42,6 +42,12 @@ module.exports = {
           lineHeight: '16px',
           fontWeight: 400,
         },
+      ],
+      'labelMedium': ['12px',
+        {
+          lineHeight: '16px',
+          fontWeight: 500,
+        },
       ]
     },
     extend: {},
