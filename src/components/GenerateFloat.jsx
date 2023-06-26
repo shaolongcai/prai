@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { globalContext } from '../app/layout';
-const EventSource = require('eventsource');
+import EventSource from "eventsource";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm'
 import styles from '../styles/GenerateFloat.module.css'
@@ -21,7 +21,7 @@ function GenerateFloat(props) {
     const [loading, setLoading] = useState(false)
     const messagesEndRef = useRef(null);
 
-    //调用接口生成文本,文本要顶格，否则无法解析markdown
+    //调用接口生成文本
     const handleGenerate = () => {
 
         const queryParams = new URLSearchParams({
@@ -40,12 +40,10 @@ function GenerateFloat(props) {
         source.reconnectInterval = 30000;
         let msg = ''
         source.onmessage = (event) => {
-            // console.log('Received message:', event.data);
             //移除"data:"前缀
             const jsonStr = event.data.replace(/^data:\s*/, '');
             const data = JSON.parse(jsonStr)
             const answer = decodeURIComponent(data.answer.replace(/\uff1f/g, '?'));
-            console.log('回答：', answer)
             msg += answer
             setMessage(msg)
         };
@@ -60,6 +58,7 @@ function GenerateFloat(props) {
     useEffect(() => {
         return () => {
             setMessage('')
+            setValue('按照场景生成流程')
         }
     }, [topic])
 

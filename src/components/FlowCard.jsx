@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper } from '../app/lib/mui';
+import { Paper } from "@mui/material";
 
 
 function FlowCard(props) {

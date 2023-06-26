@@ -47,11 +47,6 @@ export default function RootLayout({ children }) {
 
   const [app, setApp] = useState(null)
 
-
-  useEffect(() => {
-
-  }, []);
-
   useEffect(() => {
     const ENV = 'TEST'; //测试环境
     // const ENV = 'PRODUCTION'; //正式环境
