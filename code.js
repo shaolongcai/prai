@@ -33,7 +33,7 @@ switch (platformType) {
 // platform.showUI(`<script >window.location.href = "${url}"</script>`, { width: 360, height: plaHeight });
 
 //开发
-platform.showUI(`<script>window.location.href = "http://localhost:3000/ "</script>`, {
+platform.showUI(`<script>window.location.href = "http://localhost:3000/out "</script>`, {
   width: 800,
   height: plaHeight,
 });

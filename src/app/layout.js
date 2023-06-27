@@ -48,8 +48,8 @@ export default function RootLayout({ children }) {
   const [app, setApp] = useState(null)
 
   useEffect(() => {
-    const ENV = 'TEST'; //测试环境
-    // const ENV = 'PRODUCTION'; //正式环境
+    // const ENV = 'TEST'; //测试环境
+    const ENV = 'PRODUCTION'; //正式环境
     const envId = ENV === 'TEST' ? 'inspiration-test-2f7mtqq233061d9' : 'inspiration-9g1159fid21da3f2'
     const app = cloudbase.init({
       env: envId

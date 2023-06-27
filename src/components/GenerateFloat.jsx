@@ -12,7 +12,7 @@ import styles from '../styles/GenerateFloat.module.css'
 
 function GenerateFloat(props) {
 
-    const { topic, open, onClose } = props
+    const { topic, open, onClose, handleOpenLogIn } = props
 
     const [message, setMessage] = useState('')
     const [value, setValue] = useState('按照场景生成流程')
@@ -23,6 +23,12 @@ function GenerateFloat(props) {
 
     //调用接口生成文本
     const handleGenerate = () => {
+
+        //检查是否登录
+        if (false) {
+            handleOpenLogIn()
+            return
+        }
 
         const queryParams = new URLSearchParams({
             scene: topic, //主题

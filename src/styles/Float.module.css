@@ -1,0 +1,28 @@
+.root {
+    z-index: 2000;
+    border-radius: 0px;
+}
+
+.paper {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background-color: var(--background-color)
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 24px;
+    border-radius: 0px;
+}
+
+.body {
+    min-height: 300px;
+    border-radius: 0px;
+}
+
+.close {
+    position: fixed;
+    right: 16px;
+}
